@@ -149,10 +149,21 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractWindow.h" />
+    <ClInclude Include="DispatchEvent.h" />
+    <ClInclude Include="Flower.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="MovableFlower.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractWindow.cpp" />
+    <ClCompile Include="DispatchEvent.cpp" />
+    <ClCompile Include="Flower.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="MovableFlower.cpp" />
     <ClCompile Include="Practice 1.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -160,6 +171,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

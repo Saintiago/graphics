@@ -1,22 +1,23 @@
-// stdafx.h: включаемый файл для стандартных системных включаемых файлов
-// или включаемых файлов для конкретного проекта, которые часто используются, но
-// не часто изменяются
-//
-
 #pragma once
 
-#include "targetver.h"
-
-#include <stdio.h>
-#include <tchar.h>
-
-#include <SDL2\SDL.h>
-#include <GL\glew.h>
-
-// Выключаем макроподмену main на SDL_main,
-// т.к. приложение собирается c SUBSYSTEM:CONSOLE
 #ifdef _WIN32
-#undef main
+#define _USE_MATH_DEFINES
 #endif
 
-// TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
+#include <GL/glew.h>
+#include <GL/gl.h>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <SDL2/SDL_events.h>
+
+#include <chrono>
+#include <type_traits>
+#include <iostream>
+#include <string>
+#include <mutex>
+#include <memory>
+#include <vector>
