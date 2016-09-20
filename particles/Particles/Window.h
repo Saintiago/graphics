@@ -1,9 +1,7 @@
 #pragma once
 #include "DispatchEvent.h"
-#include "MovableFlower.h"
-#include "Grid.h"
-#include "Parabola.h"
 #include <vector>
+#include "Particle.h"
 
 class CWindow : public CAbstractInputControlWindow
 {
@@ -23,8 +21,6 @@ protected:
 private:
 	void SetupView(const glm::ivec2 &size);
 
-	std::unique_ptr<CGrid> m_grid;
-	std::vector<std::unique_ptr<CMovableFlower>> m_flowers;
-	CMovableFlower *m_draggingFlower = nullptr;
 	glm::vec2 m_dragOffset;
+	std::vector<std::unique_ptr<CParticle>> m_particles;
 };

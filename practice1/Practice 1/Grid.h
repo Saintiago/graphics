@@ -1,28 +1,15 @@
 #pragma once
 
-#include <glm/vec3.hpp>
-#include <boost/noncopyable.hpp>
+#include "ColoredShape.h"
 
-class CGrid : private boost::noncopyable
+class CGrid : public CColoredShape
 {
 public:
-	CGrid();
-	~CGrid();
+	CGrid() = default;
+	~CGrid() = default;
+	
+protected:
+	void Redraw()const override;
 
-	void SetWindowSize(const glm::vec2 &size);
-	void SetupColor(const glm::vec3 &gridColor);
-	void SetXAxisSpan(const glm::vec2 &gridXSpan);
-	void SetYAxisSpan(const glm::vec2 &gridYSpan);
-	void Draw()const;
-
-private:
-	void DeleteList();
-	void Redraw()const;
-	mutable unsigned m_displayList = 0;
-
-	glm::vec2 m_spanX;
-	glm::vec2 m_spanY;
-	glm::vec2 m_windowSize;
-	glm::vec3 m_gridColor;
 };
 
