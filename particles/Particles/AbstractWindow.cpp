@@ -4,7 +4,7 @@
 
 namespace
 {
-	const char WINDOW_TITLE[] = "SDL2/OpenGL Demo";
+	const char WINDOW_TITLE[] = "Particles";
 	std::once_flag g_glewInitOnceFlag;
 
 	// Используем unique_ptr с явно заданной функцией удаления вместо delete.
@@ -221,4 +221,10 @@ void CAbstractWindow::DoGameLoop()
 void CAbstractWindow::SetBackgroundColor(const glm::vec4 &color)
 {
 	m_pImpl->SetBackgroundColor(color);
+}
+
+
+glm::vec2 CAbstractWindow::GetWindowSize() const
+{
+	return m_pImpl->GetWindowSize();
 }

@@ -20,6 +20,8 @@ protected:
 	virtual void OnWindowEvent(const SDL_Event &event) = 0;
 	virtual void OnUpdateWindow(float deltaSeconds) = 0;
 	virtual void OnDrawWindow(glm::ivec2 const& size) = 0;
+	
+	glm::vec2 GetWindowSize() const;
 
 private:
 	class Impl;

@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A4937C5B-1A6A-4759-A5CD-295657C73A2F}</ProjectGuid>
+    <ProjectGuid>{83A9BEEF-B9F3-40E7-8F6C-1D3C9966CBA0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Particles</RootNamespace>
+    <RootNamespace>Helicoid</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -92,10 +92,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\repositories\cg_course_examples\chapter_2\libchapter2;C:\repositories\cg_course_examples\chapter_2\libchapter2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>C:\tmp\chapter2\Debug\libchapter2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -149,22 +151,20 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractWindow.h" />
-    <ClInclude Include="ColoredShape.h" />
-    <ClInclude Include="DispatchEvent.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="Bodies.h" />
+    <ClInclude Include="Decorators.h" />
+    <ClInclude Include="FunctionSurface.h" />
+    <ClInclude Include="Lights.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AbstractWindow.cpp" />
-    <ClCompile Include="ColoredShape.cpp" />
-    <ClCompile Include="DispatchEvent.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Particles.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="Bodies.cpp" />
+    <ClCompile Include="Decorators.cpp" />
+    <ClCompile Include="FunctionSurface.cpp" />
+    <ClCompile Include="Helicoid.cpp" />
+    <ClCompile Include="Lights.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

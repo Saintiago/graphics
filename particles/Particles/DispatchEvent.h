@@ -21,6 +21,7 @@ public:
 	virtual void OnDragEnd(const glm::vec2 &pos) { (void)pos; }
 	virtual void OnKeyDown(const SDL_KeyboardEvent &) {}
 	virtual void OnKeyUp(const SDL_KeyboardEvent &) {}
+	virtual void OnMouseUp(const SDL_MouseButtonEvent &) {}
 };
 
 // Окно, совершающее диспетчеризацию событий SDL
