@@ -1,5 +1,6 @@
 #pragma once
 
+#include "MeshP3NT2.h"
 #include "libchapter2.h"
 #include <functional>
 #include <vector>
@@ -43,12 +44,12 @@ private:
 class CSolidFunctionSurface final : public ISceneObject
 {
 public:
-    CSolidFunctionSurface(const Function2D &fn);
+    CSolidFunctionSurface(unsigned slices, unsigned stacks);
 
     /// Инициализирует индексированную сетку треугольников
     /// @param rangeX - диапазон, где x - нижняя граница, y - верхняя граница
     /// @param rangeZ - диапазон, где x - нижняя граница, y - верхняя граница
-    void Tesselate(const glm::vec2 &rangeX, const glm::vec2 &rangeZ, float step);
+	void Tesselate(unsigned slices, unsigned stacks);
 
     // IBody interface.
     void Update(float) final {}
@@ -58,4 +59,8 @@ private:
     Function2D m_fn;
     std::vector<SVertexP3N> m_vertices;
     std::vector<uint32_t> m_indicies;
+
+	SMeshP3NT2 m_mesh;
+
+	glm::vec3 GetPositionOnHelicoid(float u, float v);
 };

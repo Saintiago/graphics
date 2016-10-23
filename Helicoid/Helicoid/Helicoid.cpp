@@ -5,7 +5,7 @@
 namespace
 {
 const glm::ivec2 WINDOW_SIZE = {800, 600};
-const char WINDOW_TITLE[] = "OpenGL Demo #10 (function of two variables)";
+const char WINDOW_TITLE[] = "Helicoid";
 }
 
 int main(int, char *[])

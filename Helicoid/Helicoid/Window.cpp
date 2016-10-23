@@ -19,7 +19,7 @@ void SetupOpenGLState()
 {
     // включаем механизмы трёхмерного мира.
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);
 
@@ -39,7 +39,7 @@ float GetSincFromXY(float x, float y)
 }
 
 CWindow::CWindow()
-    : m_surface(GetSincFromXY)
+    : m_surface(40, 40)
     , m_camera(CAMERA_INITIAL_ROTATION, CAMERA_INITIAL_DISTANCE)
     , m_sunlight(GL_LIGHT0)
 {
@@ -50,8 +50,6 @@ CWindow::CWindow()
     m_material.SetDiffuse(YELLOW_RGBA);
     m_material.SetSpecular(FADED_WHITE_RGBA);
     m_material.SetShininess(MATERIAL_SHININESS);
-
-    m_surface.Tesselate({-10, 10}, {-10, 10}, 0.5f);
 
     m_sunlight.SetDirection(SUNLIGHT_DIRECTION);
     m_sunlight.SetDiffuse(WHITE_RGBA);

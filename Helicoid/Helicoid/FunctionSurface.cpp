@@ -4,7 +4,9 @@
 
 namespace
 {
+
 const float DOT_SIZE = 5.f;
+const unsigned MIN_PRECISION = 4;
 
 glm::vec3 GetPosition(const Function2D &fn, float x, float z)
 {
@@ -105,36 +107,89 @@ void CDottedFunctionSurface::Draw() const
     });
 }
 
-CSolidFunctionSurface::CSolidFunctionSurface(const Function2D &fn)
-    : m_fn(fn)
+CSolidFunctionSurface::CSolidFunctionSurface(unsigned slices, unsigned stacks)
 {
+	Tesselate(slices, stacks);
 }
 
-void CSolidFunctionSurface::Tesselate(const glm::vec2 &rangeX, const glm::vec2 &rangeZ, float step)
+void CSolidFunctionSurface::Tesselate(unsigned slices, unsigned stacks)
 {
-    const unsigned columnCount = unsigned((rangeX.y - rangeX.x) / step);
-    const unsigned rowCount = unsigned((rangeZ.y - rangeZ.x) / step);
-    m_vertices.clear();
-    m_vertices.reserve(columnCount * rowCount);
+	assert((slices >= MIN_PRECISION) && (stacks >= MIN_PRECISION));
 
-    // вычисляем позиции вершин.
-    for (unsigned ci = 0; ci < columnCount; ++ci)
-    {
-        const float x = rangeX.x + step * float(ci);
-        for (unsigned ri = 0; ri < rowCount; ++ri)
-        {
-            const float z = rangeZ.x + step * float(ri);
-            m_vertices.push_back(SVertexP3N(GetPosition(m_fn, x, z)));
-        }
-    }
-    CalculateNormals(m_vertices, m_fn, step);
-    CalculateTriangleStripIndicies(m_indicies, columnCount, rowCount);
+	m_mesh.Clear(MeshType::TriangleStrip);
+	m_mesh.m_vertices.reserve(slices * stacks);
+	// вычисляем позиции вершин.
+	for (unsigned ci = 0; ci < slices; ++ci)
+	{
+		const float u = 2 * float(ci) / float(slices - 1) - 1;
+		for (unsigned ri = 0; ri < stacks; ++ri)
+		{
+			const float v = 2 * M_PI * float(ri) / float(stacks - 1) - M_PI;
+
+			SVertexP3NT2 vertex;
+			vertex.position = GetPositionOnHelicoid(u, v);
+
+			// Нормаль к сфере - это нормализованный вектор радиуса к данной точке
+			// Поскольку координаты центра равны 0, координаты вектора радиуса
+			// будут равны координатам вершины.
+			// Благодаря радиусу, равному 1, нормализация не требуется.
+			vertex.normal = vertex.position;
+
+			// Обе текстурные координаты должны плавно изменяться от 0 до 1,
+			// натягивая прямоугольную картинку на тело вращения.
+			// При UV-параметризации текстурными координатами будут u и v.
+			vertex.texCoord = { 1.f - u, v };
+
+			m_mesh.m_vertices.push_back(vertex);
+		}
+	}
+
+	CalculateTriangleStripIndicies(m_mesh.m_indicies, slices, stacks);
+}
+
+/*void CSolidFunctionSurface::Tesselate(float uMax, float vMax, float h)
+{
+	m_mesh.Clear(MeshType::TriangleStrip);
+	m_mesh.m_vertices.reserve((unsigned)(h * uMax * vMax));
+	// вычисляем позиции вершин.
+	
+	for (float v = -(vMax / 2); v < (vMax / 2); v += 0.1f)
+	{
+		for (float u = -(uMax / 2); u < (uMax / 2); u += 0.1f)
+		{
+			SVertexP3NT2 vertex;
+			vertex.position = GetPositionOnHelicoid(u, v, h);
+
+			// Нормаль к сфере - это нормализованный вектор радиуса к данной точке
+			// Поскольку координаты центра равны 0, координаты вектора радиуса
+			// будут равны координатам вершины.
+			// Благодаря радиусу, равному 1, нормализация не требуется.
+			vertex.normal = vertex.position;
+
+			// Обе текстурные координаты должны плавно изменяться от 0 до 1,
+			// натягивая прямоугольную картинку на тело вращения.
+			// При UV-параметризации текстурными координатами будут u и v.
+			vertex.texCoord = { 1.f - u, v };
+
+			m_mesh.m_vertices.push_back(vertex);
+		}
+
+		CalculateTriangleStripIndicies(m_mesh.m_indicies, 100, 100);
+	}
+	
+}*/
+
+glm::vec3 CSolidFunctionSurface::GetPositionOnHelicoid(float u, float v)
+{
+	float h = 0.5f;
+	const float x = u * cos(v);
+	const float y = u * sin(v);
+	const float z = h * v;
+
+	return{ x, z, y };
 }
 
 void CSolidFunctionSurface::Draw() const
 {
-    DoWithBindedArrays(m_vertices, [this] {
-        glDrawElements(GL_TRIANGLE_STRIP, GLsizei(m_indicies.size()),
-                       GL_UNSIGNED_INT, m_indicies.data());
-    });
+	m_mesh.Draw();
 }
