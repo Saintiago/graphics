@@ -1,7 +1,7 @@
 #pragma once
 #include "CrimsonlandLib.h"
-#include "Lights.h"
 #include <set>
+#include "MeshP3NT2.h"
 
 class CPlayer :
 	public ISceneObject
@@ -24,8 +24,10 @@ private:
 	glm::vec2 m_pos = { 0, 0 };
 	glm::vec2 m_mousePos = { 0, 0 };
 	glm::vec2 m_turretDirection = { 0, 1 };
+	SMeshP3NT2 m_mesh;
 
 	void SetTurretAngle();
 	void SetPosition(float dt);
+	void Tesselate();
 };
 

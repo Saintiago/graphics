@@ -18,10 +18,6 @@ bool ShouldTrackKeyPressed(const SDL_Keysym &key)
     case SDLK_RIGHT:
     case SDLK_UP:
     case SDLK_DOWN:
-    case SDLK_w:
-    case SDLK_a:
-    case SDLK_s:
-    case SDLK_d:
         return true;
     }
     return false;
@@ -59,7 +55,6 @@ CCamera::CCamera(float rotationRadians, float distance)
     : m_rotationRadians(rotationRadians)
     , m_distance(distance)
 {
-    SetDirection({0.f, 0.5f, 1.f});
 }
 
 void CCamera::Update(float deltaSec)
@@ -89,24 +84,19 @@ bool CCamera::OnKeyUp(const SDL_KeyboardEvent &event)
     return false;
 }
 
-void CCamera::SetDirection(const glm::vec3 &direction)
-{
-    // Дополнительно нормализуем вектор (приводим к единичной длине).
-    m_direction = glm::normalize(direction);
-}
-
 glm::mat4 CCamera::GetViewTransform() const
 {
-    // Поворачиваем вектор направления камеры вокруг оси Y.
-    // см. http://glm.g-truc.net/0.9.3/api/a00199.html
-    glm::vec3 direction = glm::rotateY(m_direction, m_rotationRadians);
+	glm::vec3 direction = { 0.f, 0.5f, 1.f };
+	// Поворачиваем вектор направления камеры вокруг оси Y.
+	// см. http://glm.g-truc.net/0.9.3/api/a00199.html
+	direction = glm::rotateY(direction, m_rotationRadians);
 
-    const glm::vec3 eye = direction * m_distance;
-    const glm::vec3 center = {0, 0, 0};
-    const glm::vec3 up = {0, 1, 0};
+	const glm::vec3 eye = direction * m_distance;
+	const glm::vec3 center = { 0, 0, 0 };
+	const glm::vec3 up = { 0, 1, 0 };
 
-    // Матрица моделирования-вида вычисляется функцией glm::lookAt.
-    // Она даёт матрицу, действующую так, как будто камера смотрит
-    // с позиции eye на точку center, а направление "вверх" камеры равно up.
-    return glm::lookAt(eye, center, up);
+	// Матрица моделирования-вида вычисляется функцией glm::lookAt.
+	// Она даёт матрицу, действующую так, как будто камера смотрит
+	// с позиции eye на точку center, а направление "вверх" камеры равно up.
+	return glm::lookAt(eye, center, up);
 }

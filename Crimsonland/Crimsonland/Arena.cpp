@@ -4,9 +4,7 @@
 
 namespace
 {
-
-	const float TILE_SIZE = 5.f;
-	const unsigned MIN_PRECISION = 4;
+	const float TILE_SIZE = 15.f;
 
 	glm::vec3 GetPosition(const Function2D &fn, float x, float z)
 	{
@@ -44,27 +42,31 @@ namespace
 	}
 }
 
-CArena::CArena(unsigned slices, unsigned stacks)
+CArena::CArena(float xSize, float ySize)
 {
-	Tesselate(slices, stacks);
+	glm::vec4 green = { 0, 1, 0, 1 };
+	m_material.SetAmbient(green);
+	m_material.SetDiffuse(green);
+	m_material.SetSpecular(green);
+	m_material.SetShininess(30.f);
+
+	Tesselate(xSize, ySize);
 }
 
-void CArena::Tesselate(unsigned slices, unsigned stacks)
+void CArena::Tesselate(float xSize, float ySize)
 {
-	assert((slices >= MIN_PRECISION) && (stacks >= MIN_PRECISION));
-
 	m_mesh.Clear(MeshType::TriangleStrip);
-	m_mesh.m_vertices.reserve(slices * stacks);
+	m_mesh.m_vertices.reserve(xSize * ySize);
 	// вычисляем позиции вершин.
-	for (unsigned ci = 0; ci < slices; ++ci)
+	for (float ci = -(xSize / 2); ci < (xSize / 2); ++ci)
 	{
-		const float x = float(ci) / float(slices - 1);
-		for (unsigned ri = 0; ri < stacks; ++ri)
+		const float x = TILE_SIZE * float(ci) / float(xSize - 1);
+		for (float ri = -(ySize / 2); ri < (ySize / 2); ++ri)
 		{
-			const float y = float(ri) / float(stacks - 1);
+			const float y = TILE_SIZE * float(ri) / float(ySize - 1);
 
 			SVertexP3NT2 vertex;
-			vertex.position = { x, y, 0 };
+			vertex.position = { x, -0.1f, y };
 
 			// Нормаль к сфере - это нормализованный вектор радиуса к данной точке
 			// Поскольку координаты центра равны 0, координаты вектора радиуса
@@ -81,10 +83,9 @@ void CArena::Tesselate(unsigned slices, unsigned stacks)
 		}
 	}
 
-	CalculateTriangleStripIndicies(m_mesh.m_indicies, slices, stacks);
+	CalculateTriangleStripIndicies(m_mesh.m_indicies, xSize, ySize);
 
 }
-
 glm::vec3 CArena::GetNormal(const float x, const float y)
 {
 	glm::vec3 v1 = { x, y, 0};
@@ -95,5 +96,8 @@ glm::vec3 CArena::GetNormal(const float x, const float y)
 
 void CArena::Draw() const
 {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	m_material.Setup();
 	m_mesh.Draw();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

@@ -21,6 +21,11 @@ const glm::vec3 SUNLIGHT_DIRECTION = {-1.f, 0.2f, 0.7f};
 const float CAMERA_INITIAL_ROTATION = 0;
 const float CAMERA_INITIAL_DISTANCE = 5.f;
 
+void CheckOpenglVersion()
+{
+	char *version = (char*)glGetString(GL_VERSION);
+}
+
 void SetupOpenGLState()
 {
     // включаем механизмы трёхмерного мира.
@@ -87,6 +92,7 @@ void CWindow::OnDrawWindow(const glm::ivec2 &size)
     SetupView(size);
     m_sunlight.Setup();
 
+	m_arena->Draw();
 	m_player->Draw();
 }
 

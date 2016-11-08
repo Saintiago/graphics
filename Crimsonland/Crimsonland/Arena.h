@@ -25,24 +25,23 @@ struct SVertexP3N
 class CArena final : public ISceneObject
 {
 public:
-	CArena(unsigned slices, unsigned stacks);
+	CArena(float xSize, float ySize);
 
 	/// »нициализирует индексированную сетку треугольников
 	/// @param rangeX - диапазон, где x - нижн€€ граница, y - верхн€€ граница
 	/// @param rangeZ - диапазон, где x - нижн€€ граница, y - верхн€€ граница
-	void Tesselate(unsigned slices, unsigned stacks);
+	void Tesselate(float xSize, float ySize);
 
 	// IBody interface.
 	void Update(float) final {}
 	void Draw() const final;
 
 private:
-	Function2D m_fn;
+	CPhongModelMaterial m_material;
 	std::vector<SVertexP3N> m_vertices;
 	std::vector<uint32_t> m_indicies;
 
 	SMeshP3NT2 m_mesh;
 
-	glm::vec3 GetPositionOnHelicoid(float u, float v);
 	glm::vec3 GetNormal(const float u, const float v);
 };

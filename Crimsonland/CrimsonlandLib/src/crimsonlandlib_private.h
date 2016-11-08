@@ -2,11 +2,11 @@
 
 #ifdef _WIN32
 #define _USE_MATH_DEFINES
-#define _CRT_SECURE_NO_WARNINGS
-#include <Windows.h>
 #endif
 
+#include <GL/glew.h>
 #include <GL/gl.h>
+
 #define GLM_FORCE_RADIANS
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -25,6 +25,7 @@
 // Did you install SDL_ttf development files?
 // see http://www.libsdl.org/projects/SDL_ttf/
 #include <SDL2/SDL_ttf.h>
+
 
 #include <stdint.h>
 #include <chrono>

@@ -7,6 +7,7 @@
 
 enum class MeshType
 {
+	Lines,
     Triangles,
     TriangleFan,
     TriangleStrip,

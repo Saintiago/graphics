@@ -1,18 +1,22 @@
 #include "stdafx.h"
-#include "Window.h"
+#include "WindowClient.h"
 #include <SDL2/SDL.h>
-
-namespace
-{
-const glm::ivec2 WINDOW_SIZE = {800, 600};
-const char WINDOW_TITLE[] = "Crimsonland";
-}
 
 int main(int, char *[])
 {
-    CWindow window;
-    window.Show(WINDOW_TITLE, WINDOW_SIZE);
-    window.DoGameLoop();
+	try
+	{
+		CWindow window;
+		window.Show("Crimsonland", { 800, 600 });
+		CWindowClient client(window);
+		window.DoMainLoop();
+	}
+	catch (const std::exception &ex)
+	{
+		const char *title = "Fatal Error";
+		const char *message = ex.what();
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, message, nullptr);
+	}
 
-    return 0;
+	return 0;
 }

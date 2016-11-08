@@ -155,21 +155,17 @@
     <ClInclude Include="Arena.h" />
     <ClInclude Include="Bodies.h" />
     <ClInclude Include="Decorators.h" />
-    <ClInclude Include="FunctionSurface.h" />
-    <ClInclude Include="Lights.h" />
     <ClInclude Include="MeshP3NT2.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowClient.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arena.cpp" />
     <ClCompile Include="Bodies.cpp" />
     <ClCompile Include="Crimsonland.cpp" />
     <ClCompile Include="Decorators.cpp" />
-    <ClCompile Include="FunctionSurface.cpp" />
-    <ClCompile Include="Lights.cpp" />
     <ClCompile Include="MeshP3NT2.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -178,7 +174,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrimsonlandLib\CrimsonlandLib.vcxproj">

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "MeshP3NT2.h"
-#include "Lights.h"
 
 namespace
 {
@@ -33,6 +32,8 @@ GLenum GetPrimitiveType(MeshType type)
 {
     switch (type)
     {
+	case MeshType::Lines:
+		return GL_LINES;
     case MeshType::Triangles:
         return GL_TRIANGLES;
     case MeshType::TriangleFan:
@@ -65,18 +66,4 @@ void SMeshP3NT2::Draw() const
         glDrawElements(primitive, GLsizei(m_indicies.size()),
                        GL_UNSIGNED_INT, m_indicies.data());
     });
-
-	glBegin(GL_LINES);
-
-	const glm::vec4 RED_RGBA = { 1, 0, 0, 1 };
-	const float MATERIAL_SHININESS = 30.f;
-	const glm::vec4 FADED_WHITE_RGBA = { 0.3f, 0.3f, 0.3f, 1.f };
-
-	for (auto & vertex : m_vertices)
-	{
-		glVertex3f(vertex.position.x, vertex.position.y, vertex.position.z);
-		glm::vec3 normalEnd = (vertex.position + vertex.normal * -0.2f) ;
-		glVertex3f(normalEnd.x, normalEnd.y, normalEnd.z);
-	}
-	glEnd();
 }

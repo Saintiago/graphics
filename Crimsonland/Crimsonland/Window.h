@@ -1,7 +1,6 @@
 #pragma once
 #include "CrimsonlandLib.h"
 #include "Lights.h"
-#include "FunctionSurface.h"
 #include "Player.h"
 #include "Arena.h"
 #include <vector>
