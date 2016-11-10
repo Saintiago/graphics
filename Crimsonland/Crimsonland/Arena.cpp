@@ -4,7 +4,7 @@
 
 namespace
 {
-	const float TILE_SIZE = 15.f;
+	const float TILE_SIZE = 5.f;
 
 	glm::vec3 GetPosition(const Function2D &fn, float x, float z)
 	{
@@ -60,13 +60,13 @@ void CArena::Tesselate(float xSize, float ySize)
 	// вычисляем позиции вершин.
 	for (float ci = -(xSize / 2); ci < (xSize / 2); ++ci)
 	{
-		const float x = TILE_SIZE * float(ci) / float(xSize - 1);
+		const float x = TILE_SIZE * float(ci);
 		for (float ri = -(ySize / 2); ri < (ySize / 2); ++ri)
 		{
-			const float y = TILE_SIZE * float(ri) / float(ySize - 1);
+			const float y = TILE_SIZE * float(ri);
 
 			SVertexP3NT2 vertex;
-			vertex.position = { x, -0.1f, y };
+			vertex.position = { x, -0.5f, y };
 
 			// Нормаль к сфере - это нормализованный вектор радиуса к данной точке
 			// Поскольку координаты центра равны 0, координаты вектора радиуса

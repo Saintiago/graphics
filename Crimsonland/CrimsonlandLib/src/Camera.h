@@ -14,7 +14,7 @@ public:
     bool OnKeyDown(const SDL_KeyboardEvent &event);
     bool OnKeyUp(const SDL_KeyboardEvent &event);
 
-    glm::mat4 GetViewTransform() const;
+    glm::mat4 GetViewTransform(glm::vec2 playerPos) const;
 
 private:
     float m_rotationRadians = 0;

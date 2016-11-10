@@ -84,15 +84,10 @@ bool CCamera::OnKeyUp(const SDL_KeyboardEvent &event)
     return false;
 }
 
-glm::mat4 CCamera::GetViewTransform() const
+glm::mat4 CCamera::GetViewTransform(glm::vec2 playerPos) const
 {
-	glm::vec3 direction = { 0.f, 0.5f, 1.f };
-	// Поворачиваем вектор направления камеры вокруг оси Y.
-	// см. http://glm.g-truc.net/0.9.3/api/a00199.html
-	direction = glm::rotateY(direction, m_rotationRadians);
-
-	const glm::vec3 eye = direction * m_distance;
-	const glm::vec3 center = { 0, 0, 0 };
+	const glm::vec3 eye = { playerPos.x, m_distance, playerPos.y + 20.f };
+	const glm::vec3 center = { playerPos.x, 0, playerPos.y };
 	const glm::vec3 up = { 0, 1, 0 };
 
 	// Матрица моделирования-вида вычисляется функцией glm::lookAt.

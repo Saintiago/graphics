@@ -97,6 +97,11 @@ CPlayer::~CPlayer()
 {
 }
 
+glm::vec2 CPlayer::GetPosition()
+{
+	return m_pos;
+}
+
 void CPlayer::Update(float dt)
 {
 	SetTurretAngle();
@@ -105,7 +110,7 @@ void CPlayer::Update(float dt)
 
 void CPlayer::Draw() const
 {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT, GL_FILL);
 	m_material.Setup();
 
 	const glm::vec3 eye = { 0, 0, 0 };
@@ -127,39 +132,58 @@ void CPlayer::Draw() const
 void CPlayer::Tesselate()
 {
 	m_mesh.Clear(MeshType::TriangleStrip);
-	m_mesh.m_vertices.reserve(3);
+	m_mesh.m_vertices.reserve(4);
 
 	SVertexP3NT2 vertex1;
 	SVertexP3NT2 vertex2;
 	SVertexP3NT2 vertex3;
+	SVertexP3NT2 vertex4;
 
 	glm::vec3 v1 = { 0, 0, -2.0f };
 	glm::vec3 v2 = { 1.0f, 0, 1.0f };
 	glm::vec3 v3 = { -1.0f, 0, 1.0f };
-	glm::vec3 normal = -1.0f * glm::normalize(glm::cross(v2 - v1, v3 - v1));
+	glm::vec3 v4 = { 0, -3.f, 1.0f };
+	glm::vec3 normal = glm::normalize(glm::cross(v2 - v1, v3 - v1));
 
 	vertex1.position = v1;
 	vertex2.position = v2;
 	vertex3.position = v3;
+	vertex4.position = v4;
 
 	vertex1.normal = normal;
 	vertex2.normal = normal;
 	vertex3.normal = normal;
+	vertex4.normal = normal;
 	
 	vertex1.texCoord = { 1.f - v1.x, v1.y };
 	vertex2.texCoord = { 1.f - v2.x, v2.y };
 	vertex3.texCoord = { 1.f - v3.x, v3.y };
+	vertex4.texCoord = { 1.f - v4.x, v4.y };
 
 	m_mesh.m_vertices.push_back(vertex1);
 	m_mesh.m_vertices.push_back(vertex2);
 	m_mesh.m_vertices.push_back(vertex3);
+	m_mesh.m_vertices.push_back(vertex4);
 
 	m_mesh.m_indicies.clear();
 	m_mesh.m_indicies.reserve(3);
+
+	m_mesh.m_indicies.push_back(1);
 	m_mesh.m_indicies.push_back(2);
+	m_mesh.m_indicies.push_back(0);
+
+	m_mesh.m_indicies.push_back(3);
+	m_mesh.m_indicies.push_back(0);
+	m_mesh.m_indicies.push_back(2);
+
+	m_mesh.m_indicies.push_back(3);
 	m_mesh.m_indicies.push_back(1);
 	m_mesh.m_indicies.push_back(0);
 
+	m_mesh.m_indicies.push_back(3);
+	m_mesh.m_indicies.push_back(2);
+	m_mesh.m_indicies.push_back(1);
+	
 	//CalculateTriangleStripIndicies(m_mesh.m_indicies, 2, 2);
 }
 

@@ -17,6 +17,8 @@ public:
 	bool OnKeyUp(const SDL_KeyboardEvent &event);
 	bool OnMouseMotion(const CRay &ray);
 
+	glm::vec2 GetPosition();
+
 private:
 
 	CPhongModelMaterial m_material;

@@ -4,9 +4,8 @@
 namespace
 {
 const glm::vec4 BLACK = {0, 0, 0, 1};
-const float CAMERA_INITIAL_ROTATION = 1;
-const float CAMERA_INITIAL_DISTANCE = 5;
-const int SPHERE_PRECISION = 40;
+const float CAMERA_INITIAL_ROTATION = 0;
+const float CAMERA_INITIAL_DISTANCE = 50;
 
 void SetupOpenGLState()
 {
@@ -79,7 +78,7 @@ CWindowClient::CWindowClient(CWindow &window)
     m_programQueue = { &m_programPhong, &m_programLambert, &m_programFixed };
 
 	m_player = std::make_unique<CPlayer>();
-	m_arena = std::make_unique<CArena>(10, 10);
+	m_arena = std::make_unique<CArena>(100, 100);
 }
 
 void CWindowClient::OnUpdateWindow(float deltaSeconds)
@@ -125,7 +124,7 @@ void CWindowClient::CheckOpenGLVersion()
 void CWindowClient::SetupView(const glm::ivec2 &size)
 {
     glViewport(0, 0, size.x, size.y);
-    const glm::mat4 mv = m_camera.GetViewTransform();
+    const glm::mat4 mv = m_camera.GetViewTransform(m_player->GetPosition());
     glLoadMatrixf(glm::value_ptr(mv));
 
     // Матрица перспективного преобразования вычисляется функцией
@@ -156,7 +155,7 @@ void CWindowClient::OnMouseMotion(const glm::vec2 &pos)
 	// Вычисляем матрицу обратного преобразования
 	//  поскольку поле игры не имеет своей трансформации,
 	//  мы берём матрицу камеры в качестве ModelView-матрицы
-	const glm::mat4 mvMat = m_camera.GetViewTransform();
+	const glm::mat4 mvMat = m_camera.GetViewTransform(m_player->GetPosition());
 	const glm::mat4 projMat = GetProjectionMatrix(winSize);
 	const glm::mat4 inverse = glm::inverse(projMat * mvMat);
 
